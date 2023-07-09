@@ -55,10 +55,51 @@ public class MainController {
             log.error("***** Запрос ***** " + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requestDTO));
             log.error("***** Запрос ***** " + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(responseDTO));
 
-            return responseDTO
+            return responseDTO;
       } catch (Exception e) {
-          return ResponseEntity.status((HttpStatus.BAD_REQUEST).body(e.getMessage()));
+          return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
       }
 
     }
+    @GetMapping(
+            value = "/info/getBalances",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public Object getBalances(@RequestBody RequestDTO requestDTO){
+        try {
+            String clientid = requestDTO.getClientId();
+            char firstDigit = clientid.charAt(0);
+            BigDecimal maxLimit;
+
+            if (firstDigit == '8') {
+                maxLimit = new BigDecimal(2000);
+            } else if (firstDigit == '9') {
+                maxLimit = new BigDecimal(1000);
+            } else {
+                maxLimit = new BigDecimal(10000);
+            }
+
+            String RqUID = requestDTO.getRqUID(); //первый способ получения ID
+
+            ResponseDTO responseDTO = new ResponseDTO();
+
+            responseDTO.setRqUID(RqUID); //второй способ получения ID
+            responseDTO.setClientId(clientid);
+            responseDTO.setAccount(requestDTO.getAccount());
+            responseDTO.setCurrency("RUB");
+            responseDTO.setBalance("999");
+            responseDTO.setMaxLimit(maxLimit);
+
+            log.error("***** Запрос ***** " + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(requestDTO));
+            log.error("***** Запрос ***** " + mapper.writerWithDefaultPrettyPrinter().writeValueAsString(responseDTO));
+
+            return responseDTO;
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
+    }
+
+
+
 }
