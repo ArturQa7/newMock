@@ -16,6 +16,6 @@ public class ResponseDTO {
     private String clientId;
     private String account;
     private String currency;
-    private String balance;
+    private double balance;
     private BigDecimal maxLimit;
 }
