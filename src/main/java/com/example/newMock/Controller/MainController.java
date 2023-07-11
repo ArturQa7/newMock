@@ -60,9 +60,9 @@ public class MainController {
 
             ResponseDTO responseDTO = new ResponseDTO();
 
-            responseDTO.setRqUID(RqUID); //второй способ получения ID
+            responseDTO.setRqUID(RqUID);
             responseDTO.setClientId(clientid);
-            responseDTO.setAccount(requestDTO.getAccount());
+            responseDTO.setAccount(requestDTO.getAccount()); //второй способ получения ID
             responseDTO.setCurrency(currency);
             responseDTO.setBalance(balance);
             responseDTO.setMaxLimit(maxLimit);
